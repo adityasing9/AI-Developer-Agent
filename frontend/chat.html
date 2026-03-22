@@ -326,9 +326,9 @@
         </div>
 
     </div>
-
+    <script src="env.js"></script>
     <script>
-        const API = "http://127.0.0.1:8000";
+        const API = window.ENV.API_URL;
 
         let chats = JSON.parse(localStorage.getItem("allChats")) || [];
         let currentChat = null;
@@ -645,6 +645,7 @@
             }
         };
     </script>
+
 
 </body>
 

@@ -255,9 +255,9 @@
 
     </div>
 
-
+    <script src="env.js"></script>
     <script>
-        const API = "http://localhost:8000";
+        const API = window.ENV.API_URL;
 
         async function debugCode() {
             const code = document.getElementById("code").value;

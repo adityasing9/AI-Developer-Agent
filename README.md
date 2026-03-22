@@ -98,28 +98,31 @@ ai-dev-agent/
 ---
 
 ## ⚙️ Local Setup
-
+```
 git clone https://github.com/adityasing9/AI-Developer-Agent.git  
+
 cd AI-Developer-Agent  
-
+```
 ### Backend
-
+```
 cd backend  
+
 pip install -r requirements.txt  
+
 uvicorn app:app --reload  
-
+```
 ### Frontend
-
+```
 Open: frontend/index.html  
-
+```
 ---
 
 ## 🌐 Environment Config
-
+```
 window.ENV = {  
   API_URL: "https://your-backend-url"  
 };
-
+```
 ---
 
 ## ⚠️ Limitations

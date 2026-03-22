@@ -69,6 +69,7 @@ Deployment: Vercel • Render
 
 ## 📂 Project Structure
 
+```bash
 ai-dev-agent/
 │
 ├── backend/

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>AI Developer Agent</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: radial-gradient(circle at top, #0f172a, #020617);
+            color: white;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 40px;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 20px;
+            letter-spacing: 0.5px;
+
+            background: linear-gradient(270deg, #4f46e5, #2563eb, #22c55e);
+            background-size: 400% 400%;
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            animation: gradientMove 6s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* HERO */
+        .hero {
+            text-align: center;
+            margin-top: 120px;
+        }
+
+        .hero h1 {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            opacity: 0.7;
+        }
+
+        /* BUTTONS */
+        .buttons {
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 14px 24px;
+            margin: 10px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            transition: 0.2s;
+        }
+
+        .primary {
+            background: linear-gradient(135deg, #4f46e5, #2563eb);
+            color: white;
+        }
+
+        .secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* FEATURES */
+        .features {
+            display: flex;
+            justify-content: center;
+            margin-top: 80px;
+            gap: 30px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 14px;
+            width: 220px;
+            text-align: center;
+        }
+
+        /* CTA */
+        .cta {
+            text-align: center;
+            margin-top: 120px;
+            padding: 60px 20px;
+        }
+
+        .cta h2 {
+            font-size: 28px;
+        }
+
+        .cta p {
+            opacity: 0.7;
+            margin: 10px 0 20px;
+        }
+
+        /* FOOTER */
+        .footer {
+            text-align: center;
+            padding: 30px;
+            opacity: 0.5;
+            font-size: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar">
+        <div class="logo" id="logoText"></div>
+    </div>
+
+    <div class="hero">
+        <h1>Build, Debug & Chat with AI</h1>
+        <p>Your personal AI coding assistant (Offline + Online Hybrid)</p>
+
+        <div class="buttons">
+            <button class="btn primary" onclick="goChat()">Start Chat</button>
+            <button class="btn secondary" onclick="goDebug()">Debug Code</button>
+        </div>
+    </div>
+
+    <div class="features">
+        <div class="card">
+            💬 <br><br>
+            Chat Interface
+        </div>
+
+        <div class="card">
+            🛠 <br><br>
+            Code Debugging Agent
+        </div>
+
+        <div class="card">
+            ⚡ <br><br>
+            Offline + Online AI
+        </div>
+    </div>
+
+    <script>
+        function goChat() {
+            window.location.href = "chat.html";
+        }
+
+        function goDebug() {
+            window.location.href = "debug.html";
+        }
+        const text = " AI Developer Agent";
+        let i = 0;
+
+        function typeEffect() {
+            if (i < text.length) {
+                document.getElementById("logoText").textContent += text[i];
+                i++;
+                setTimeout(typeEffect, 50);
+            }
+        }
+        window.onload = () => {
+            typeEffect();
+        };
+    </script>
+
+    <!-- CTA SECTION -->
+    <div class="cta">
+        <h2>Ready to build with AI?</h2>
+        <p>Start chatting or debug your code instantly.</p>
+        <button class="btn primary" onclick="goChat()">Get Started</button>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <p>© 2026 AI Developer Agent</p>
+        <p>Built by Aaditya Singh</p>
+    </div>
+
+</body>
+
+</html>

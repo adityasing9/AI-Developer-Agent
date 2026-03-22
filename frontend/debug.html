@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AI Developer Agent - Debug</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: radial-gradient(circle at top, #0f172a, #020617);
+            color: white;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            height: 70px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #4f46e5;
+        }
+
+        .nav-buttons button {
+            margin-left: 10px;
+        }
+
+        /* BUTTONS */
+        button {
+            padding: 10px 16px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .primary {
+            background: linear-gradient(135deg, #4f46e5, #2563eb);
+            color: white;
+        }
+
+        .secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        /* MAIN LAYOUT */
+        .container {
+            display: flex;
+            height: calc(100vh - 70px);
+        }
+
+        /* LEFT - CODE */
+        .editor {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        textarea {
+            flex: 1;
+            background: #020617;
+            color: #e2e8f0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 15px;
+            font-family: monospace;
+            font-size: 14px;
+            resize: none;
+        }
+
+        .controls {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+        select {
+            padding: 10px;
+            border-radius: 10px;
+            background: #020617;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* RIGHT - OUTPUT */
+        .output-panel {
+            width: 40%;
+            padding: 20px;
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            background: #020617;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .output-panel pre {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+            overflow: auto;
+        }
+
+        .copy-btn {
+            margin-top: 10px;
+            align-self: flex-end;
+        }
+
+        /* LOADING */
+        .loading {
+            color: #60a5fa;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .popup-box {
+            background: #020617;
+            padding: 25px;
+            border-radius: 16px;
+            width: 320px;
+            text-align: center;
+            position: relative;
+            animation: popupFade 0.3s ease;
+        }
+
+        .popup-box h2 {
+            margin-bottom: 10px;
+        }
+
+        .popup-box p {
+            opacity: 0.7;
+            font-size: 14px;
+        }
+
+        .popup-box button {
+            margin-top: 15px;
+            padding: 10px 16px;
+            border-radius: 10px;
+            border: none;
+            background: linear-gradient(135deg, #4f46e5, #2563eb);
+            color: white;
+            cursor: pointer;
+        }
+
+        /* close icon */
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            cursor: pointer;
+            font-size: 14px;
+            opacity: 0.6;
+        }
+
+        .close-btn:hover {
+            opacity: 1;
+        }
+
+        /* animation */
+        @keyframes popupFade {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <div class="navbar">
+        <div class="logo">AI Developer <span>Agent</span></div>
+
+        <div class="nav-buttons">
+            <button class="secondary" onclick="location.href='chat.html'">Chat</button>
+            <button class="primary">Debug</button>
+        </div>
+    </div>
+
+    <!-- MAIN -->
+    <div class="container">
+
+        <!-- LEFT -->
+        <div class="editor">
+            <h2>🛠 Debug Your Code</h2>
+
+            <textarea id="code" placeholder="Paste your code here..."></textarea>
+
+            <div class="controls">
+                <button class="primary" onclick="debugCode()">Debug</button>
+                <button class="secondary" onclick="runCode()">Run</button>
+                <select id="lang">
+                    <option value="python">🐍 Python</option>
+                    <option value="c">💻 C</option>
+                </select>
+                <select id="mode">
+                    <option value="auto">⚡ Auto</option>
+                    <option value="offline">💻 Offline</option>
+                    <option value="online">🌐 Online</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="output-panel">
+            <h2>📄 Result</h2>
+
+            <pre id="output">Your debug result will appear here...</pre>
+
+            <button class="secondary copy-btn" onclick="copyCode()">Copy</button>
+        </div>
+
+    </div>
+
+
+    <script>
+        const API = "http://localhost:8000";
+
+        async function debugCode() {
+            const code = document.getElementById("code").value;
+            const mode = document.getElementById("mode").value;
+            const lang = document.getElementById("lang").value;
+
+            const output = document.getElementById("output");
+            output.innerHTML = "<span class='loading'>⚡ Debugging...</span>";
+
+            try {
+                const res = await fetch(API + "/debug", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ code, mode, language: lang })
+                });
+
+                const data = await res.json();
+
+                let text = "🛠 Language: " + lang.toUpperCase() + "\n\n";
+
+                // ✅ SHOW STEPS
+                if (data.steps && data.steps.length > 0) {
+                    data.steps.forEach(s => {
+                        text += `Step ${s.step}\n`;
+                        text += `Error:\n${s.error}\n`;
+                        text += `Fix:\n${s.fix}\n\n`;
+                    });
+                }
+
+                // ✅ FINAL RESULT
+                text += "✅ Fixed Code:\n\n" + (data.fixed_code || "No fix");
+                text += "\n\n📤 Output:\n\n" + (data.output || "No output");
+
+                output.innerText = text;
+
+            } catch (err) {
+                output.innerHTML = `<span style="color:red;">❌ ${err.message}</span>`;
+            }
+        }
+
+        /* OPTIONAL: RUN CODE (separate button if you want) */
+        async function runCode() {
+            const code = document.getElementById("code").value;
+            const lang = document.getElementById("lang").value;
+
+            const output = document.getElementById("output");
+            output.innerHTML = "<span class='loading'>⚡ Running...</span>";
+
+            try {
+                const res = await fetch(API + "/run", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ code, language: lang })
+                });
+
+                const data = await res.json();
+
+                output.innerText =
+                    "📤 Output:\n\n" + (data.output || data.error);
+
+            } catch (err) {
+                output.innerHTML = `<span style="color:red;">❌ ${err.message}</span>`;
+            }
+        }
+
+        function copyCode() {
+            const text = document.getElementById("output").innerText;
+            navigator.clipboard.writeText(text);
+            alert("Copied!");
+        }
+
+        function closePopup() {
+            document.getElementById("devPopup").style.display = "none";
+        }
+
+    </script>
+
+
+    <div id="devPopup" class="popup-overlay">
+        <div class="popup-box">
+
+            <span class="close-btn" onclick="closePopup()">✖</span>
+
+            <h2>🚧 Debug AI (Beta)</h2>
+            <p>This feature is still under development.</p>
+            <p>Some results may be incorrect or incomplete.</p>
+
+            <button onclick="closePopup()">Got it</button>
+
+        </div>
+    </div>
+
+
+</body>
+
+</html>

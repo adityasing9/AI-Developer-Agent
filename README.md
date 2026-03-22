@@ -73,13 +73,16 @@ ai-dev-agent/
 │
 ├── backend/
 │   ├── app.py
+│   │
 │   ├── agents/
 │   │   ├── debugger.py
 │   │   ├── executor.py
 │   │   └── llm.py
+│   │
 │   ├── routes/
 │   │   ├── chat.py
 │   │   └── code.py
+│   │
 │   └── requirements.txt
 │
 ├── frontend/
@@ -89,8 +92,7 @@ ai-dev-agent/
 │   └── env.js
 │
 ├── Dockerfile
-├── .gitignore
-
+└── .gitignore
 ---
 
 ## ⚙️ Local Setup

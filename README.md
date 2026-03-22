@@ -94,6 +94,7 @@ ai-dev-agent/
 │
 ├── Dockerfile
 └── .gitignore
+```
 ---
 
 ## ⚙️ Local Setup
